@@ -10,7 +10,7 @@ import PostContainer from './PostContainer'
 import { useSelector } from 'react-redux'
 
 
-const Profile = () => {
+const Profile = ({uploadPost, setContent}) => {
 
 
   return (
@@ -23,7 +23,7 @@ const Profile = () => {
         </div>
 
         <div className='flex-row row-start-1 col-span-7 col-start space-y-4'>
-          <CreatePost />
+          <CreatePost uploadPost={uploadPost} setContent={setContent} />
         </div>
       </div>
 

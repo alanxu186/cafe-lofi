@@ -3,12 +3,12 @@ import PostContainer from './PostContainer'
 import LeftContainer from './LeftContainer'
 import RightContainer from './RightContainer'
 
-const Home = () => {
+const Home = ({uploadPost, setContent}) => {
 
   return (
     <div className='flex justify-center h-screen'>
       <LeftContainer/>
-      <PostContainer/>
+      <PostContainer uploadPost={uploadPost} setContent={setContent}/>
       <RightContainer/>  
     </div>
   )

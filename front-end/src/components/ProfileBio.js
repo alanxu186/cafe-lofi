@@ -12,7 +12,7 @@ const ProfileBio = () => {
     //update user bio
     const updateBio = async () => {
         try {
-            await axios.put('http://localhost:', {
+            await axios.put('http://localhost:3001/', {
                 bio: userBio
             })
             alert('Bio has updated!')
@@ -25,8 +25,7 @@ const ProfileBio = () => {
     //delete user account
     const deleteAccount = async () => {
         try {
-            await axios.delete('http://localhost:3001', {
-            })
+            await axios.delete('http://localhost:3001/')
             alert('Account has been deleted!')
         } catch (err) {
             console.log(err)
@@ -35,7 +34,7 @@ const ProfileBio = () => {
     }
 
     return (
-        <div className='shadow-md rounded w-full p-4 border-solid  border-2 border-sky-500'>
+        <div className='shadow-md rounded w-full p-4 border-solid bg-white border-2 border-sky-500'>
             <div className='text-xl font-bold text-black'>
                 Intro
             </div>

@@ -10,7 +10,7 @@ const LeftContainer = () => {
     return (
         <div className='w-1/5 pt-5 h-full hidden xl:flex flex-col fixed left-0'>
             <div className='flex justify-between items-center px-5 h-4 group'>
-                <span className='font-semibold text-gray-500 text-lg'>Following</span>
+                <span className='font-semibold text-gray-700 text-lg'>Following</span>
             </div>
 
             <ul className='p-5'>
@@ -37,7 +37,7 @@ const LeftContainer = () => {
 
 
             <div className='flex justify-between items-center px-5 h-4 group'>
-                <span className='font-semibold text-gray-500 text-lg'>Your shortcuts</span>
+                <span className='font-semibold text-gray-700 text-lg'>Your shortcuts</span>
             </div>
 
             <ul className='p-5'>

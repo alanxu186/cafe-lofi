@@ -1,9 +1,9 @@
-import lofiabout from '../assets/lofiabout.jpeg'
+import lofiabout3 from '../assets/lofiabout3.mp4'
 
 const About = () => {
 
   return (
-    <div className='bg-[#a1bdd0]'>
+    <div>
         <div className="bg-[#78949f] h-100">
           <div className="container flex flex-col items-center px-4 py-16 pb-24 mx-auto text-center lg:pb-56 md:py-32 md:px-10 lg:px-32 dark:text-gray-900">
             <h1 className="text-5xl font-bold leading-none sm:text-6xl xl:max-w-3xl dark:text-gray-900">Enter the Lofi-Zone</h1>
@@ -14,7 +14,7 @@ const About = () => {
             </div>
           </div>
         </div>
-        <img src={lofiabout} alt="" className="w-5/6 mx-auto mb-12 -mt-20 rounded-lg shadow-md lg:-mt-40 dark:bg-gray-500" />
+        <video src={lofiabout3} alt="video-img" autoPlay loop muted className="w-5/6 mx-auto mb-12 -mt-20 rounded-lg shadow-md lg:-mt-40 dark:bg-gray-500" />
     </div>
   )
 }

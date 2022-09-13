@@ -9,6 +9,8 @@ const PostTile = ({ post }) => {
   const { title, content } = post
 
 
+
+
   return (
     <div>
 

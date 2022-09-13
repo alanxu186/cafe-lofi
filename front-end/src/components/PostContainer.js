@@ -3,29 +3,32 @@ import axios from 'axios'
 import PostTile from './PostTile'
 import CreatePost from './CreatePost'
 
-const PostContainer = () => {
+const PostContainer = ({uploadPost, setContent}) => {
 
-  const [posts, setPosts] = useState([])
+  const [userPosts, setUserPosts] = useState([])
+
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await axios.get('http://localhost:3001/posts')
+        const res = await axios.get(`http://localhost:3001/posts/`)
         console.log(res.data)
-        setPosts(res.data)
+        setUserPosts(res.data)
       } catch (err) {
         console.log(err)
       }
     }
-    if (posts.length === 0) getPosts()
+    if (userPosts.length === 0) getPosts()
 
   }, [])
 
-  const mappedPosts = posts.map((post) => <PostTile key={post.id} post={post} />)
+  console.log(userPosts)
+
+  const mappedPosts = userPosts.map((post) => <PostTile key={post.id} post={post} />)
 
 
   return (
     <div className='w-full lg:w-2/3 xl:w-2/5 pt-32 lg:pt-16 px-2'>
-      <CreatePost/>
+      <CreatePost uploadPost={uploadPost} setContent={setContent}/>
       {mappedPosts}
     </div>
   )
