@@ -3,7 +3,7 @@ import axios from 'axios'
 import PostTile from './PostTile'
 import CreatePost from './CreatePost'
 
-const PostContainer = ({uploadPost, setContent}) => {
+const PostContainer = ({content, uploadPost, setContent}) => {
 
   const [userPosts, setUserPosts] = useState([])
 
@@ -21,14 +21,12 @@ const PostContainer = ({uploadPost, setContent}) => {
 
   }, [])
 
-  console.log(userPosts)
-
   const mappedPosts = userPosts.map((post) => <PostTile key={post.id} post={post} />)
 
 
   return (
     <div className='w-full lg:w-2/3 xl:w-2/5 pt-32 lg:pt-16 px-2'>
-      <CreatePost uploadPost={uploadPost} setContent={setContent}/>
+      <CreatePost content={content} uploadPost={uploadPost} setContent={setContent}/>
       {mappedPosts}
     </div>
   )

@@ -37,7 +37,7 @@ const LoginPage = () => {
         e.preventDefault()
         try {
             const res = await axios.post('http://localhost:3001', { name, email, password })
-            console.log(res.data)
+            // console.log(res.data)
             //useNavigate?
             navigate('/profile')
         } catch (err) {
