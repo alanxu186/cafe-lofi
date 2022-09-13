@@ -8,9 +8,9 @@ import lofipfp5 from '../assets/lofipfp5.jpeg'
 
 const LeftContainer = () => {
     return (
-        <div className='w-1/5 pt-5 h-full hidden xl:flex flex-col fixed left-0 bg-blue-200'>
+        <div className='w-1/5 pt-5 h-full hidden xl:flex flex-col fixed left-0'>
             <div className='flex justify-between items-center px-5 h-4 group'>
-                <span className='font-semibold text-gray-500 text-lg'>Featured Artists</span>
+                <span className='font-semibold text-gray-500 text-lg'>Following</span>
             </div>
 
             <ul className='p-5'>

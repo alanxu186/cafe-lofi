@@ -3,15 +3,14 @@ import coffeeshop from '../assets/coffeeshop.gif'
 import lofipfp5 from '../assets/lofipfp5.jpeg'
 import axios from 'axios'
 import PostTile from './PostTile'
-import format from 'date-fns/format'
 import ProfileHeader from './ProfileHeader'
 import ProfileBio from './ProfileBio'
 import CreatePost from './CreatePost'
 import PostContainer from './PostContainer'
+import { useSelector } from 'react-redux'
 
 
-const Profile = ({ setText, uploadPost }) => {
-
+const Profile = () => {
 
 
   return (
@@ -23,9 +22,8 @@ const Profile = ({ setText, uploadPost }) => {
           <ProfileBio />
         </div>
 
-        <div className='flex-row row-start-1 col-span-7 col-start- space-y-4'>
-          <CreatePost setText={setText} uploadPost={uploadPost} />
-          <PostContainer />
+        <div className='flex-row row-start-1 col-span-7 col-start space-y-4'>
+          <CreatePost />
         </div>
       </div>
 

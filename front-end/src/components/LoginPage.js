@@ -13,20 +13,15 @@ const LoginPage = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const [register, setRegister] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    // const showRegister = () => {
-    //     setRegister(!register)
-    // }
 
 
     const handleLogin = async (e) => {
         e.preventDefault()
         dispatch()
         try {
-            const res = await axios.post('http://localhost:4000/api/auth/signin', { email, password }, {
+            const res = await axios.post('http://localhost:3001', { email, password }, {
                 withCredentials: true,
             })
             dispatch()
@@ -41,7 +36,7 @@ const LoginPage = () => {
     const handleRegister = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('http://localhost:4000/api/auth/signup', { name, email, password })
+            const res = await axios.post('http://localhost:3001', { name, email, password })
             console.log(res.data)
             //useNavigate?
             navigate('/profile')

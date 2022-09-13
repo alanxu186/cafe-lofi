@@ -14,7 +14,7 @@ const Login = ({ setEmail, setPassword, handleLogin }) => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 // console.log(result)
-                axios.post('http://localhost:4000/api/auth/google', {
+                axios.post('http://localhost:3001/api/auth/google', {
                     name: result.user.displayName,
                     email: result.user.email,
                     img: result.user.photoURL,
@@ -28,13 +28,6 @@ const Login = ({ setEmail, setPassword, handleLogin }) => {
                 dispatch()
             })
     }
-
-    // const [showRegister, setShowRegister] = useState(false)
-
-    // const switchRegister = () => {
-    //     setShowRegister(!showRegister)
-    //     console.log('hi')
-    // }
 
     return (
         <div className='flex w-full h-screen'>

@@ -23,7 +23,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className='sticky top-0 w-full text-white flex justify-between p-4 items-center z-50 bg-[#18434e]'>
+        <div className='fixed top-0 w-full text-white flex justify-between p-4 items-center z-50 bg-[#18434e]'>
 
             <div className='text-2xl font-bold text-center uppercase p-4'>
                 <h1 className='block text-7xl'> Cafe Heiwa</h1>
