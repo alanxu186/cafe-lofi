@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import defaultimage from '../assets/noprofileimage.jpeg'
 
 export const userSlice = createSlice({
     name: "user",
     initialState: {
         isLoggedin: false,
         profile: {
-            name: "Guest"
+            name: "Guest",
         }
     },
     reducers: {

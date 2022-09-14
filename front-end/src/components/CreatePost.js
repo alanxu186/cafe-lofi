@@ -3,7 +3,7 @@ import lofipfp2 from '../assets/lofipfp2.png'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
-const CreatePost = ({ setUserPosts, userPosts }) => {
+const CreatePost = ({ setUserPosts, userPosts, imageUrl }) => {
 
     const user = useSelector(state => state.user)
 
@@ -34,7 +34,7 @@ const CreatePost = ({ setUserPosts, userPosts }) => {
         <div>
             <form className='w-full shadow-md rounded bg-white p-4 border-solid border-2 border-sky-500' onSubmit={uploadPost}>
                 <div className='flex space-x-2'>
-                    <img src={lofipfp2} alt='pfp' className='h-10 w-10 rounded-full' />
+                    <img src={`http://localhost:3001${imageUrl}`} alt='pfp' className='h-10 w-10 rounded-full' />
                     {/* <input className='bg-fFill px-4 py-3 w-full focus:outline-none rounded-full' placeholder='Title' onChange={(e) => setTitle(e.target.value)} /> */}
                     <input className='bg-fFill px-4 py-3 w-full focus:outline-none rounded-full' value={content} placeholder='What is on your mind?' onChange={(e) => setContent(e.target.value)} />
                 </div>

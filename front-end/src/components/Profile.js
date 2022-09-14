@@ -9,13 +9,32 @@ import { useSelector } from 'react-redux'
 
 const Profile = () => {
 
-  const [myPosts, setMyPosts] = useState([])
+  const user = useSelector(state => state.user)
 
+  const [myPosts, setMyPosts] = useState([])
+  const [profileImage, setProfileImage] = useState(null)
+  const [imageUrl, setImageUrl] = useState("")
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/users/${user.profile.id}`).then(res => res.json()).then(data => setImageUrl(data.avatar_url))
+}, [])
+
+  function changeImage() {
+    if (profileImage) {
+        const formData = new FormData()
+        formData.append("avatar", profileImage)
+        fetch(`http://localhost:3001/user_image/${user.profile.id}`, {
+            method: "PATCH",
+            body: formData,
+        }).then(res => res.json()).then(data => setImageUrl(data.avatar_url))
+    }
+}
+  
   useEffect(() => {
     const getPosts = async () => {
       let token = localStorage.getItem("jwt")
       try {
-        const res = await axios.get(`http://localhost:3001/my_posts`,{
+        const res = await axios.get(`http://localhost:3001/my_posts`, {
           headers: {
             jwt: token
           }
@@ -32,7 +51,7 @@ const Profile = () => {
 
   return (
     <div>
-      <ProfileHeader />
+      <ProfileHeader setProfileImage={setProfileImage} changeImage={changeImage} imageUrl={imageUrl} />
 
       <div className='px-5 grid grid-cols-12 pt-4 gap-4'>
         <div className='col-span-5 col-start-1 row-start-1 space-y-4'>
@@ -40,8 +59,8 @@ const Profile = () => {
         </div>
 
         <div className='flex-row row-start-1 col-span-7 col-start space-y-4'>
-          <CreatePost userPosts={myPosts} setUserPosts={setMyPosts}/>
-          {myPosts.map((post) => <PostTile key={post.id} post={post} myPosts={myPosts} setMyPosts={setMyPosts}/>)}
+          <CreatePost userPosts={myPosts} setUserPosts={setMyPosts} imageUrl={imageUrl}/>
+          {myPosts.map((post) => <PostTile key={post.id} post={post} myPosts={myPosts} setMyPosts={setMyPosts} />)}
         </div>
       </div>
 

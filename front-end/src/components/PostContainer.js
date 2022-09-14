@@ -5,7 +5,7 @@ import CreatePost from './CreatePost'
 
 const PostContainer = () => {
 
-  const [userPosts, setUserPosts] = useState([])
+  const [userPosts, setUserPosts] = useState([]) 
 
   useEffect(() => {
     const getPosts = async () => {
