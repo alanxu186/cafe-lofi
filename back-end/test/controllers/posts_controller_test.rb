@@ -6,43 +6,33 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get posts_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_post_url
+    get posts_url, as: :json
     assert_response :success
   end
 
   test "should create post" do
     assert_difference("Post.count") do
-      post posts_url, params: { post: { content: @post.content, dislikes: @post.dislikes, likes: @post.likes, title: @post.title, user_id: @post.user_id } }
+      post posts_url, params: { post: { content: @post.content, dislikes: @post.dislikes, likes: @post.likes, title: @post.title, user_id: @post.user_id } }, as: :json
     end
 
-    assert_redirected_to post_url(Post.last)
+    assert_response :created
   end
 
   test "should show post" do
-    get post_url(@post)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_post_url(@post)
+    get post_url(@post), as: :json
     assert_response :success
   end
 
   test "should update post" do
-    patch post_url(@post), params: { post: { content: @post.content, dislikes: @post.dislikes, likes: @post.likes, title: @post.title, user_id: @post.user_id } }
-    assert_redirected_to post_url(@post)
+    patch post_url(@post), params: { post: { content: @post.content, dislikes: @post.dislikes, likes: @post.likes, title: @post.title, user_id: @post.user_id } }, as: :json
+    assert_response :success
   end
 
   test "should destroy post" do
     assert_difference("Post.count", -1) do
-      delete post_url(@post)
+      delete post_url(@post), as: :json
     end
 
-    assert_redirected_to posts_url
+    assert_response :no_content
   end
 end

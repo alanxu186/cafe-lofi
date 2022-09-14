@@ -1,59 +1,65 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show update destroy ]
 
-  # GET /users or /users.json
+  # GET /users
   def index
     @users = User.all
+
+    render json: @users,  except: [:password_digest]
   end
 
-  # GET /users/1 or /users/1.json
+  # GET /users/1
   def show
+    render json: @user , except: [:password_digest], methods: [:posts]
   end
 
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-  end
-
-  # POST /users or /users.json
+  # POST /users
   def create
-    @user = User.new(user_params)
+    user = User.create!(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if user
+      token = generate_token user.id
+      render json: {token: token, user: user}
+    else
+      render json: {error:"401 unauthorized"}
     end
   end
 
-  # PATCH/PUT /users/1 or /users/1.json
+  # PATCH/PUT /users/1
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    token = request.headers["jwt"]
+    user_id = decode_token(token)
+    if @user
+      @user.update(user_params)
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /users/1 or /users/1.json
+  # DELETE /users/1
   def destroy
+    
     @user.destroy
+  end
 
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
+  def login
+    user = User.find_by(email: params[:email]).try(:authenticate, params[:password])
+    if user 
+      token = generate_token user.id
+      render json: {token:token, user: user}
+    else
+      render json: {error:"401 unauthorized"}
+    end
+  end
+
+  def profile 
+    token = request.headers["jwt"]
+    user_id = decode_token(token)
+    if user_id
+      render json: User.find(user_id), except: [:password_digest], methods: [:posts]
+    else
+      render json: {error: "401 unauthorized"}
     end
   end
 
@@ -62,9 +68,15 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
+    def decode_token(token)
+      JWT.decode(token,"123")[0]["user_id"]
+    end
 
+    def generate_token(user_id)
+      JWT.encode({user_id:user_id}, "123")
+    end
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password_digest)
+      params.permit(:name, :email, :password, :bio, :location)
     end
 end

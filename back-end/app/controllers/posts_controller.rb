@@ -1,66 +1,72 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show update destroy ]
 
-  # GET /posts or /posts.json
+  # GET /posts
   def index
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc)
+
+    render json: @posts 
   end
 
-  # GET /posts/1 or /posts/1.json
+  # GET /posts/1
   def show
+    render json: @post
   end
 
-  # GET /posts/new
-  def new
-    @post = Post.new
-  end
-
-  # GET /posts/1/edit
-  def edit
-  end
-
-  # POST /posts or /posts.json
+  # POST /posts
   def create
-    @post = Post.new(post_params)
+    token = request.headers["jwt"]
+    user_id = decode_token(token)
+    @post = Post.create!(title: params[:title],content: params[:content],user_id: user_id)
 
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    if @post.save
+      render json: @post, status: :created, location: @post
+    else
+      render json: @post.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /posts/1 or /posts/1.json
+  def my_posts
+    token = request.headers["jwt"]
+    user_id = decode_token(token)
+    posts = Post.where(user_id: user_id)
+    render json: posts.order(created_at: :desc)
+  end
+
+  # PATCH/PUT /posts/1
   def update
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @post }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
-    end
+    token = request.headers["jwt"]
+    user_id = decode_token(token)
+    post = Post.find(params[:id])
+    post.update(post_params) if post.user_id == user_id
+    render json: post
   end
 
-  # DELETE /posts/1 or /posts/1.json
+  # DELETE /posts/1
   def destroy
-    @post.destroy
+    # decode the token -> user_id
+    # check if the user_id is the same as the one you are trying to delete 
+    # delete if so
 
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    # token = request.headers["jwt"]
+    # user_id = decode_token(token)
+    # SUDO CODE NOT SURE IF IT WOULD WORK IF PASTED
+    # Post.find(id).user_id == user_id
+    token = request.headers["jwt"]
+    user_id = decode_token(token)
+    post = Post.find(params[:id])
+    post.destroy if post.user_id == user_id
+    render json: {message: "post has been deleted!"}
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+    
+    def decode_token(token)
+      JWT.decode(token,"123")[0]["user_id"]
     end
 
     # Only allow a list of trusted parameters through.

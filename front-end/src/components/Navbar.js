@@ -43,7 +43,7 @@ const Navbar = () => {
                     <li> <Link to={"/about"}>About</Link> </li>
                     {/* <li> <Link to={"/bookmark"}>Bookmark</Link> </li> */}
                     <li> <Link to={"/profile"}>{user.profile.name}</Link> </li>
-                    <img src={lofipfp} className="rounded-full h-10 w-10" />
+                    {/* <img src={lofipfp} className="rounded-full h-10 w-10" /> */}
                     <li> <Link to={"/login"} onClick={handleLogout}>Logout</Link> </li>
                 </ul>
 
