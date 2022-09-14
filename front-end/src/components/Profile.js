@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import coffeeshop from '../assets/coffeeshop.gif'
-import lofipfp5 from '../assets/lofipfp5.jpeg'
 import axios from 'axios'
 import PostTile from './PostTile'
 import ProfileHeader from './ProfileHeader'
 import ProfileBio from './ProfileBio'
 import CreatePost from './CreatePost'
-import PostContainer from './PostContainer'
 import { useSelector } from 'react-redux'
 
 
-const Profile = ({content, uploadPost, setContent}) => {
+const Profile = () => {
+
+  const [myPosts, setMyPosts] = useState([])
+
+  useEffect(() => {
+    const getPosts = async () => {
+      let token = localStorage.getItem("jwt")
+      try {
+        const res = await axios.get(`http://localhost:3001/my_posts`,{
+          headers: {
+            jwt: token
+          }
+        })
+        setMyPosts(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    if (myPosts.length === 0) getPosts()
+
+  }, [])
 
 
   return (
@@ -23,7 +40,8 @@ const Profile = ({content, uploadPost, setContent}) => {
         </div>
 
         <div className='flex-row row-start-1 col-span-7 col-start space-y-4'>
-          <CreatePost content={content} uploadPost={uploadPost} setContent={setContent} />
+          <CreatePost userPosts={myPosts} setUserPosts={setMyPosts}/>
+          {myPosts.map((post) => <PostTile key={post.id} post={post} myPosts={myPosts} setMyPosts={setMyPosts}/>)}
         </div>
       </div>
 

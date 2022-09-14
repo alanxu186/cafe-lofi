@@ -3,9 +3,31 @@ import lofipfp2 from '../assets/lofipfp2.png'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
-const CreatePost = ({content, uploadPost, setContent}) => {
+const CreatePost = ({ setUserPosts, userPosts }) => {
 
     const user = useSelector(state => state.user)
+
+    const [content, setContent] = useState('')
+
+    // create post function 
+    const uploadPost = async (e) => {
+        e.preventDefault()
+        let token = localStorage.getItem("jwt")
+        try {
+            let res = await axios.post('http://localhost:3001/posts', {
+                content: content,
+            }, {
+                headers: {
+                    jwt: token
+                }
+            })
+            setContent('')
+            setUserPosts([res.data, ...userPosts]);
+        } catch (err) {
+            console.log(err)
+            alert('Could not make post!')
+        }
+    }
 
 
     return (

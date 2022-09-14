@@ -5,17 +5,32 @@ import { useSelector } from 'react-redux'
 const ProfileBio = () => {
 
     const user = useSelector(state => state.user)
+    const id = user.profile.id
+    console.log(user)
 
     //state that manages bio
     const [userBio, setUserBio] = useState('')
+    console.log(userBio)
 
     //update user bio
     const updateBio = async () => {
+        let token = localStorage.getItem('jwt')
         try {
-            await axios.put('http://localhost:3001/', {
+            const res = await axios.patch(`http://localhost:3001/users/${id}`, {
                 bio: userBio
+            }, {
+                headers:{
+                    jwt: token
+                }
             })
-            alert('Bio has updated!')
+            setUserBio(userBio.map((item) => {
+                if( item.id === res.data.id){
+                    return res.data
+                }
+                else {
+                    return item
+                }
+            }))
         } catch (err) {
             console.log(err)
             alert('Could not update bio!')
@@ -25,7 +40,7 @@ const ProfileBio = () => {
     //delete user account
     const deleteAccount = async () => {
         try {
-            await axios.delete('http://localhost:3001/')
+            await axios.delete(`http://localhost:3001/users/`)
             alert('Account has been deleted!')
         } catch (err) {
             console.log(err)
@@ -43,10 +58,13 @@ const ProfileBio = () => {
                 <span className='ml-2'>Bio: {user.profile.bio} </span>
             </div>
             <div className='mt-4 flex items-center'>
-                <span className='ml-2'>Followers: {user.profile.followers} </span>
+                <span className='ml-2'>Location: {user.profile.location} </span>
             </div>
+            {/* <div className='mt-4 flex items-center'>
+                <span className='ml-2'>Followers: {user.profile.followers} </span>
+            </div> */}
             <div className='mt-4 flex items-center'>
-                <input placeholder='Update your bio' onChange={(e) => setUserBio(e.target.value)} />
+                <input className='shadow appearance-none border rounded w-full' placeholder='Update your bio' onChange={(e) => setUserBio(e.target.value)} />
             </div>
             <div className='mt-4 flex items-center'>
                 <button className='ml-2 bg-slate-400 ' onClick={updateBio}>Update Bio</button>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai"
 import lofipfp from '../assets/lofipfp.jpeg'
 import { useSelector, useDispatch } from "react-redux";
-
+import { clearUser } from "../redux/userSlice.js"
 const Navbar = () => {
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
@@ -11,8 +11,10 @@ const Navbar = () => {
 
     const handleLogout = async (e) => {
         e.preventDefault()
-        // console.log('hi')
-        dispatch()
+        localStorage.clear()
+        dispatch(
+            clearUser()
+        )
         navigate('/login')
     }
 

@@ -16,7 +16,7 @@ const ProfileHeader = () => {
                     <img className='object-cover w-full h-96 rounded-b' src={coffeeshop} alt='cover-photo' />
 
                     <div className='absolute -bottom-6'>
-                        <img className='object-cover border-4 border-white w-40 h-40 rounded-full' src={lofipfp5} />
+                        <img className='object-cover border-4 border-white w-56 h-56 rounded-full' src={lofipfp5} />
                     </div>
                 </div>
 
