@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   post "/login", to: "users#login"
   get "/profile", to: "users#profile"
   get "/my_posts", to: "posts#my_posts"
+  patch "/user_image/:id", to: "users#update_image"
 end

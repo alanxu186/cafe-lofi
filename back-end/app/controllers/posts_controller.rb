@@ -17,7 +17,7 @@ class PostsController < ApplicationController
   def create
     token = request.headers["jwt"]
     user_id = decode_token(token)
-    @post = Post.create!(title: params[:title],content: params[:content],user_id: user_id)
+    @post = Post.create!(title: params[:title],content: params[:content],user_id: user_id, image: params[:image])
 
     if @post.save
       render json: @post, status: :created, location: @post
@@ -71,6 +71,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content, :likes, :dislikes, :user_id)
+      params.require(:post).permit(:title, :content, :image_url, :likes, :dislikes, :user_id, :image)
     end
 end

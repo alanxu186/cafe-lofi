@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show update destroy ]
+  before_action :set_user, only: %i[ show update destroy update_image ]
 
   # GET /users
   def index
@@ -37,6 +37,13 @@ class UsersController < ApplicationController
     end
   end
 
+  # Update profile picture 
+  def update_image
+    @user.update!(params.permit(:avatar))
+    render json: @user
+  end
+
+
   # DELETE /users/1
   def destroy
     
@@ -63,6 +70,8 @@ class UsersController < ApplicationController
     end
   end
 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -77,6 +86,6 @@ class UsersController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def user_params
-      params.permit(:name, :email, :password, :bio, :location)
+      params.permit(:name, :email, :password, :bio, :location, :avatar)
     end
 end

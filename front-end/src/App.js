@@ -19,6 +19,24 @@ const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
 
+  const [profileImage, setProfileImage] = useState(null)
+  const [imageUrl, setImageUrl] = useState("")
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/users/${user.profile.id}`).then(res => res.json()).then(data => setImageUrl(data.avatar_url))
+  }, [])
+
+  function changeImage() {
+    if (profileImage) {
+      const formData = new FormData()
+      formData.append("avatar", profileImage)
+      fetch(`http://localhost:3001/user_image/${user.profile.id}`, {
+        method: "PATCH",
+        body: formData,
+      }).then(res => res.json()).then(data => setImageUrl(data.avatar_url))
+    }
+  }
+
   useEffect(() => {
     let token = localStorage.getItem("jwt")
     let grabProfile = () => {
@@ -50,17 +68,23 @@ const App = () => {
         <>
           <Navbar />
           <Routes>
-            <Route path="/main" element={<Main />} />
-            <Route path="/" element={<Home />} />
+            {/* <Route path="/main" element={<Main />} /> */}
+            <Route path="/" element={<Home imageUrl={imageUrl} setImageUrl={setImageUrl} />} />
             <Route path="/about" element={<About />} />
-            <Route path="/bookmark" element={<Bookmark />} />
-            <Route path="/profile" element={<Profile />} />
+            {/* <Route path="/bookmark" element={<Bookmark />} /> */}
+            <Route path="/profile" element={<Profile setProfileImage={setProfileImage} imageUrl={imageUrl} setImageUrl={setImageUrl} changeImage={changeImage} />} />
             <Route path="/login" element={<LoginPage />} />
           </Routes>
         </>
         :
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
 
-        <LoginPage />
+        </Routes>
+
+
       }
     </div>
   );

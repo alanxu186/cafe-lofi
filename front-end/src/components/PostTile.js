@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import lofipfp2 from '../assets/lofipfp2.png'
+import lofipfp7 from '../assets/lofipfp7.png'
 import coffeeshop from '../assets/coffeeshop.gif'
 import { format } from 'timeago.js'
 import axios from 'axios'
 
-const PostTile = ({ myPosts, setMyPosts, post }) => {
-  const { user, content, created_at } = post
+const PostTile = ({ myPosts, setMyPosts, post, imageUrl }) => {
+  const { user, content, created_at, image_url } = post
   const [updateContent, setUpdateContent] = useState('')
+
+
 
   const updatePost = async () => {
     let token = localStorage.getItem("jwt")
     try {
-      const res = await axios.patch(`http://localhost:3001/posts/${post.id}`,{
+      const res = await axios.patch(`http://localhost:3001/posts/${post.id}`, {
         content: updateContent
-      },{
+      }, {
         headers: {
           jwt: token
         }
@@ -21,7 +23,7 @@ const PostTile = ({ myPosts, setMyPosts, post }) => {
       console.log(res)
       setUpdateContent('')
       setMyPosts(myPosts.map((item) => {
-        if ( item.id === res.data.id ){
+        if (item.id === res.data.id) {
           return res.data
         }
         else {
@@ -38,12 +40,12 @@ const PostTile = ({ myPosts, setMyPosts, post }) => {
   const deletePost = async () => {
     let token = localStorage.getItem("jwt")
     try {
-      let res = await axios.delete(`http://localhost:3001/posts/${post.id}`, 
-      {
-        headers: {
-          jwt: token
-        }
-      })
+      let res = await axios.delete(`http://localhost:3001/posts/${post.id}`,
+        {
+          headers: {
+            jwt: token
+          }
+        })
       setMyPosts(myPosts.filter((item) => (item.id !== post.id)))
     } catch (err) {
       console.log(err);
@@ -57,7 +59,7 @@ const PostTile = ({ myPosts, setMyPosts, post }) => {
         <div className='flex items-center justify-between px-4 py-2'>
           <div className='flex space-x-2 items-center'>
             <div className='relative'>
-              <img className='w-10 h-10 rounded-full' src={lofipfp2} alt='pfp' />
+              <img className='w-10 h-10 rounded-full' src={`http://localhost:3001${imageUrl}`} alt='pfp' />
               <span className='bg-green-500 w-3 h-3 rounded-full absolute right-0 top-3/4 border-white border-2'></span>
             </div>
             <div>
@@ -69,7 +71,7 @@ const PostTile = ({ myPosts, setMyPosts, post }) => {
           </div>
 
           <div className='flex space-x-2'>
-            <input className='shadow appearance-none border rounded w-full' value={updateContent} type='text' placeholder='Edit text' onChange={(e) => setUpdateContent(e.target.value)}/>
+            <input className='shadow appearance-none border rounded w-full' value={updateContent} type='text' placeholder='Edit text' onChange={(e) => setUpdateContent(e.target.value)} />
             <button onClick={updatePost}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                 <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
@@ -91,8 +93,8 @@ const PostTile = ({ myPosts, setMyPosts, post }) => {
           {content}
         </div>
 
-        <div>
-          <img src={coffeeshop} alt='post-img' />
+        <div className='flex flex-col justify-center items-center'>
+          <img src={image_url} alt='post-img' />
         </div>
 
         <div className='py-2 px-2'>
@@ -118,7 +120,7 @@ const PostTile = ({ myPosts, setMyPosts, post }) => {
 
         <div className='py-2 px-4'>
           <div className='flex space-x-2'>
-            <img className='w-9 h-9 rounded-full' src={lofipfp2} alt='pfp' />
+            <img className='w-9 h-9 rounded-full' src={`http://localhost:3001${imageUrl}`} alt='pfp' />
             <div className='flex-1 flex bg-gray-100'>
               <input type='text' placeholder='Write a comment...' className='outline-none bg-transparent flex-1' />
               <button className='flex space-x-0 items-center justify-center'>Send</button>
