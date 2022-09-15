@@ -5,7 +5,7 @@ import { format } from 'timeago.js'
 import axios from 'axios'
 
 const PostTile = ({ myPosts, setMyPosts, post, imageUrl }) => {
-  const { user, content, created_at, image_url } = post
+  const { user, content, created_at, post_image } = post
   const [updateContent, setUpdateContent] = useState('')
 
 
@@ -94,7 +94,7 @@ const PostTile = ({ myPosts, setMyPosts, post, imageUrl }) => {
         </div>
 
         <div className='flex flex-col justify-center items-center'>
-          <img src={image_url} alt='post-img' />
+          <img src={`http://localhost:3001/${post_image}`} alt='post-img' />
         </div>
 
         <div className='py-2 px-2'>

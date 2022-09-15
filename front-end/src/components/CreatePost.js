@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import lofipfp2 from '../assets/lofipfp2.png'
+import defaultpfp from '../assets/noprofileimage.jpeg'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
@@ -19,10 +19,7 @@ const CreatePost = ({ setUserPosts, userPosts, imageUrl, setImageUrl }) => {
         formData.append('content', content)
         let token = localStorage.getItem("jwt")
         try {
-            let res = await axios.post('http://localhost:3001/posts', {
-                content: content,
-                body: formData,
-            }, {
+            let res = await axios.post('http://localhost:3001/posts', formData, {
                 headers: {
                     jwt: token
                 }
@@ -48,13 +45,13 @@ const CreatePost = ({ setUserPosts, userPosts, imageUrl, setImageUrl }) => {
                 <div className='border border-gray-500 border-opacity-10 mt-4'></div>
                 <div className='flex justify-center'>
                     <button className='flex justify-center items-center focus:outline-none mt-4 py-2'>
+                        <input type='file' accept='image/*' onChange={(e) => setImage(e.target.files[0])} />
                         <span>Upload post</span>
                     </button>
-                    {/* <button className='flex justify-center items-center w-1/3 focus:outline-none mt-4 py-2'>
-                        <input type='file' accept='image/*' onChange={(e) => setImage(e.target.files[0])} />
-                        <span>Upload photo</span>
-                    </button>
                     <button className='flex justify-center items-center w-1/3 focus:outline-none mt-4 py-2'>
+                        {/* <span>Upload photo</span> */}
+                    </button>
+                    {/* <button className='flex justify-center items-center w-1/3 focus:outline-none mt-4 py-2'>
                         <span>Upload video</span>
                     </button> */}
                 </div>

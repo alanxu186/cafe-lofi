@@ -16,7 +16,7 @@ u2 = User.create!(name: "Alex", email: "alex123@gmail.com", bio:"I like programm
 u3 = User.create!(name: "Ken", email: "kenu@gmail.com", bio:"I love anime", location:"Japan" ,password: "123456")
 u4 = User.create!(name: "Marguerite", email: "marguerite@gmail.com", bio:"I like sushi", location:"Queens", password: "123456")
 
-p1 = Post.create!(title: "my first post",  content: "hello everyone this is my first post", image_url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEfRPu51-vyDzAUtBHdkqVj-jGWPDn1cNWuA&usqp=CAU", likes: 5, dislikes: 2, user_id: u1.id)
+p1 = Post.create!(title: "my first post",  content: "hello everyone this is my first post", image_url:"https://i.pinimg.com/originals/c1/50/f8/c150f806a08b037564541f249d3e3214.jpg", likes: 5, dislikes: 2, user_id: u1.id)
 p1 = Post.create!(title: "my second post", content: "hello everyone this is my second post", image_url:"https://wallpapercave.com/wp/wp4649556.jpg",likes: 2, dislikes: 1, user_id: u1.id)
 p1 = Post.create!(title: "my first post", content: "hello everyone this is my first post", image_url:"https://i.pinimg.com/originals/77/42/c8/7742c8552e91c4d2f99bfee0019a7c2e.jpg", likes: 7, dislikes: 0, user_id: u2.id)
 p1 = Post.create!(title: "my second post", content: "hello everyone this is my second post", image_url:"https://cdn.britannica.com/96/1296-050-4A65097D/gelding-bay-coat.jpg", likes: 8, dislikes: 0, user_id: u2.id)

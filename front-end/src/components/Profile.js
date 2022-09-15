@@ -5,6 +5,7 @@ import ProfileHeader from './ProfileHeader'
 import ProfileBio from './ProfileBio'
 import CreatePost from './CreatePost'
 import { useSelector } from 'react-redux'
+import ProfileVideo from './ProfileVideo'
 
 
 const Profile = ({ setProfileImage, changeImage, imageUrl, setImageUrl }) => {
@@ -42,6 +43,7 @@ const Profile = ({ setProfileImage, changeImage, imageUrl, setImageUrl }) => {
       <div className='px-5 grid grid-cols-12 pt-4 gap-4'>
         <div className='col-span-5 col-start-1 row-start-1 space-y-4'>
           <ProfileBio />
+          <ProfileVideo/>
         </div>
 
         <div className='flex-row row-start-1 col-span-7 col-start space-y-4'>
